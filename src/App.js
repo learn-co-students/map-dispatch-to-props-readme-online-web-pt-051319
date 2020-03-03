@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import { addItem } from  './actions/items';
 
 class App extends Component {
-
+//handleOnClick() dispatches an action to the store
   handleOnClick() {
-    this.props.store.dispatch(addItem());
+    //this.props.store.dispatch(addItem());
+    this.props.addItem()
   }
 
   render() {
     return (
       <div className="App">
-        <button onClick={(event) => this.handleOnClick(event)}>
+        {/* <button onClick={(event) => this.handleOnClick(event)}> */}
+        <button onClick={this.handleOnClick}>
           Click
           </button>
         <p>{this.props.items.length}</p>
@@ -27,4 +29,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    addItem: () => {
+      dispatch(addItem())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+// or export default connect(mapStateToProps, { addItem })(App) if you get rid of mapDispatchToProps()
